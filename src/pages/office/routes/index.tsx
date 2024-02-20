@@ -59,7 +59,7 @@ const Routes = () => {
             ? expressCars.map((item: CreateCarOption) => {
                 return (
                   <Box key={item?.id} sx={{ m: 2 }}>
-                    <Cart item={item} />
+                    <Cart item={item}/>
                   </Box>
                 );
               })

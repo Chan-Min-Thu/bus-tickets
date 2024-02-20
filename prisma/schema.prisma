@@ -15,9 +15,9 @@ model ExpressCar {
   name          String
   startFrom     String
   arrivedTo     String
-  departureTime Int
+  departureTime DateTime
   duration      Int
-  arrivedTime   Int
+  arrivedTime   DateTime
   price         Int
   seats         Int
   isVIP         Boolean

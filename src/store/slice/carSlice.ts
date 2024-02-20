@@ -13,7 +13,7 @@ export const createCar = createAsyncThunk("car/createCar",async(options:CreateCa
     const {name,startFrom,arrivedTo,duration,departureTime,arrivedTime,price,isVIP,seats,onSuccess,isError} = options
     
     try{
-      const response = await fetch(`${config.apiBaseUrl}/office/routes`,{
+      const response = await fetch(`${config.apiBaseUrl}/office/route`,{
         method:"POST",
         headers:{"content-type":"application/json"},
         body:JSON.stringify({name,startFrom,arrivedTo,duration,departureTime,arrivedTime,price,isVIP,seats})
@@ -30,7 +30,7 @@ export const createCar = createAsyncThunk("car/createCar",async(options:CreateCa
 export const updateCar = createAsyncThunk("car/updateCar",async(options:UpdateCarOption,thunkAPI)=>{
     const {id,name,startFrom,arrivedTo,duration,departureTime,arrivedTime,price,isVIP,seats,onSuccess,isError} = options
     try{
-       const response = await fetch(`${config.apiBaseUrl}/office/routes`,{
+       const response = await fetch(`${config.apiBaseUrl}/office/route`,{
         method:"PUT",
         headers:{"content-type":"application/json"},
         body:JSON.stringify({id,name,startFrom,arrivedTo,duration,departureTime,arrivedTime,price,isVIP,seats})
@@ -48,7 +48,7 @@ export const deleteCar = createAsyncThunk("car/deleteCar",async(payload:DeleteCa
     const {id,onSuccess,isError} = payload;
     console.log(id)
     try{
-      await fetch(`${config.apiBaseUrl}/office/routes?id=${id}`,{
+      await fetch(`${config.apiBaseUrl}/office/route?id=${id}`,{
         method:"DELETE"
       })
       thunkAPI.dispatch(removeCar({id}))
@@ -75,7 +75,6 @@ const CarSlice = createSlice({
         const otherCars = state.items.filter(item =>item.id !== action.payload.id)
         state.items = [...otherCars]
        }
-       
 
     }
 })

@@ -2,12 +2,16 @@ import { CreateCarOption } from "@/type/car";
 import { Box, Button, Card, CardContent, Typography } from "@mui/material";
 import { ExpressCar } from "@prisma/client";
 import { useRouter } from "next/router";
+import { memo } from "react";
 
 interface Props {
   item: CreateCarOption;
+
 }
-const Cart = ({ item }: Props) => {
+const Cart = memo(({ item }: Props) => {
   const router = useRouter();
+  const date = item.departureTime && new Date(item.departureTime);
+  const departure = date &&  date.getHours() + ":"+ (date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes())
   return (
     <Box>
       <Card sx={{ minWidth: 300, padding: 2 }}>
@@ -16,7 +20,8 @@ const Cart = ({ item }: Props) => {
             {item?.name}
           </Typography>
           <Typography sx={{fontSize:14}}>
-            {Number(item?.departureTime)} hr
+            {departure} hrs
+            {/* {Number(item?.departureTime?.getHours())}:{Number(item?.departureTime?.getMinutes())} hr */}
           </Typography>
         </Box>
         <Box
@@ -46,5 +51,5 @@ const Cart = ({ item }: Props) => {
       </Card>
     </Box>
   );
-};
+})
 export default Cart;

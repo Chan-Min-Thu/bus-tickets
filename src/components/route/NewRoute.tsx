@@ -11,8 +11,10 @@ import {
   FormControlLabel,
   TextField,
 } from "@mui/material";
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import dayjs from "dayjs";
 import { Router, useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
   id?: number;
@@ -21,22 +23,26 @@ interface Props {
   setOpen: (value: boolean) => void;
 }
 const NewRoute = ({ open, setOpen, car, id }: Props) => {
+  const date = new Date("October 13, 2023 12:00:00");
   const defaultData = {
     name: "",
     startFrom: "",
     arrivedTo: "",
     duration: 0,
-    departureTime: 0,
-    arrivedTime: 0,
+    departureTime:null,
+    arrivedTime: null,
     price: 0,
     isVIP: false,
     seats: 0,
   };
-  const [data, setData] = useState<CreateCarOption>(car ? car : defaultData);
+  const [data, setData] = useState<CreateCarOption>(defaultData);
   const router = useRouter();
   const isDetail = router.pathname.includes(`routes/${car?.id}`);
   const dispatch = useAppDispatch();
   //create fun;
+  useEffect(()=>{
+     setData(data)
+  },[data])
   const handleCreateCar = () => {
     dispatch(createCar(data));
     setData(defaultData);
@@ -46,9 +52,10 @@ const NewRoute = ({ open, setOpen, car, id }: Props) => {
   //update fun;
   const handleUpdateCar = () => {
     dispatch(updateCar(data));
-    setData(defaultData);
+    // setData(defaultData);
     setOpen(false);
     router.push("/office/routes");
+    
   };
   const handleDeleteCar = () => {
     if (car) {
@@ -56,20 +63,22 @@ const NewRoute = ({ open, setOpen, car, id }: Props) => {
       router.push("/office/routes");
     }
   };
+  const h =new Date("2024-02-09T01:00:00.000Z");
+  const hour = h.getHours()
   if (!car && isDetail) return null;
 
   //update Car and Create Car UI
   return (
     // <Box sx={{ display: "flex", justifyContent: "center" }}>
     <Dialog
-      sx={{ maxWidth: 500, mx: "auto" }}
+      sx={{ minWidth: 600, mx: "auto" }}
       open={open}
       onClose={() => setOpen(car ? true : false)}
       // TransitionComponent={CSSTransition}sd
     >
       <Box sx={{ display: "flex", justifyContent: "space-between", m: 1 }}>
         <DialogTitle>{car ? "Update" : "Create"} Routes</DialogTitle>
-        <Box sx={{alignItems:"center",mt:2,mr:2}}>
+        <Box sx={{ alignItems: "center", mt: 2, mr: 2 }}>
           <Button
             sx={{ display: car ? "fix-content" : "none" }}
             onClick={handleDeleteCar}
@@ -84,8 +93,8 @@ const NewRoute = ({ open, setOpen, car, id }: Props) => {
           id="standard-basic"
           label="Name"
           defaultValue={car ? car.name : defaultData.name}
-          variant="standard"
-          onChange={(e) => setData({ ...data, name: e.target.value })}
+          variant="outlined"
+          onChange={(e) => car?setData({...car,name:e.target.value}):setData({ ...data, name: e.target.value })}
           sx={{ width: 300, mt: 1 }}
         />
         <Box sx={{ display: "flex", justifyContent: "space-between", mt: 1 }}>
@@ -93,42 +102,33 @@ const NewRoute = ({ open, setOpen, car, id }: Props) => {
             id="standard-basic"
             label="From"
             defaultValue={car ? car.startFrom : defaultData.startFrom}
-            variant="standard"
-            onChange={(e) => setData({ ...data, startFrom: e.target.value })}
-            sx={{ width: 100 }}
+            variant="outlined"
+            onChange={(e) => car?setData({...car,startFrom:e.target.value}):setData({ ...data, startFrom: e.target.value })}
+            sx={{ width: 130 }}
           />
           <TextField
             id="standard-basic"
             label="To"
-            variant="standard"
+            variant="outlined"
             defaultValue={car ? car.arrivedTo : defaultData.arrivedTo}
-            onChange={(e) => setData({ ...data, arrivedTo: e.target.value })}
-            sx={{ width: 100 }}
+            onChange={(e) => car? setData({ ...car, arrivedTo: e.target.value }):setData({ ...data, arrivedTo: e.target.value })}
+            sx={{ width: 130 }}
           />
         </Box>
         <Box sx={{ display: "flex", justifyContent: "space-between", mt: 1 }}>
-          <TextField
-            id="standard-basic"
-            label="Depature"
-            defaultValue={car ? car.departureTime : defaultData.departureTime}
-            variant="standard"
-            onChange={(e) =>
-              setData({
-                ...data,
-                departureTime: Number(e.target.value) as Number,
-              })
+          <TimePicker
+            label="Departure"
+            sx={{ width: 130, my: 1, border: "none" }}
+            defaultValue={car ?dayjs(car.departureTime): defaultData.departureTime}
+            onChange={(newValue) =>
+            car? setData({...car,departureTime:newValue}):setData({...data,departureTime:newValue})
             }
-            sx={{ width: 100 }}
           />
-          <TextField
-            id="standard-basic"
+          <TimePicker
             label="Arrived"
-            defaultValue={car ? car.arrivedTime : defaultData.arrivedTime}
-            variant="standard"
-            onChange={(e) =>
-              setData({ ...data, arrivedTime: Number(e.target.value) })
-            }
-            sx={{ width: 100 }}
+            sx={{ width: 130, my: 1, border: "none" }}
+            defaultValue={car ? dayjs(car.arrivedTime): defaultData.arrivedTime}
+            onChange={(newValue) =>car? setData({...car,arrivedTime:newValue}): setData({ ...data, arrivedTime: newValue })}
           />
         </Box>
         <Box sx={{ display: "flex", justifyContent: "space-between", mt: 1 }}>
@@ -136,21 +136,21 @@ const NewRoute = ({ open, setOpen, car, id }: Props) => {
             id="standard-basic"
             label="Price"
             defaultValue={car ? car.price : defaultData.price}
-            variant="standard"
+            variant="outlined"
             onChange={(e) =>
-              setData({ ...data, price: Number(e.target.value) })
+             car?setData({...car,price:Number(e.target.value)}): setData({ ...data, price: Number(e.target.value) })
             }
-            sx={{ width: 100 }}
+            sx={{ width: 130 }}
           />
           <TextField
             id="standard-basic"
             label="Duration"
             defaultValue={car ? car.duration : defaultData.duration}
-            variant="standard"
+            variant="outlined"
             onChange={(e) =>
-              setData({ ...data, duration: Number(e.target.value) })
+             car? setData({...car,duration:Number(e.target.value)}): setData({ ...data, duration: Number(e.target.value) })
             }
-            sx={{ width: 100 }}
+            sx={{ width: 130 }}
           />
         </Box>
         <Box sx={{ display: "flex", justifyContent: "space-between", mt: 1 }}>
@@ -158,17 +158,17 @@ const NewRoute = ({ open, setOpen, car, id }: Props) => {
             id="standard-basic"
             label="Seats"
             defaultValue={car ? car.seats : defaultData.seats}
-            variant="standard"
+            variant="outlined"
             onChange={(e) =>
-              setData({ ...data, seats: Number(e.target.value) })
+             car?setData({...car,seats:Number(e.target.value)}):  setData({ ...data, seats: Number(e.target.value) })
             }
-            sx={{ width: 100 }}
+            sx={{ width: 130 }}
           />
           <FormControlLabel
-            control={<Checkbox defaultChecked />}
+            control={<Checkbox defaultChecked={car ? car.isVIP : defaultData.isVIP} />}
             label="Is VIP"
-            defaultChecked={car ? car.isVIP : defaultData.isVIP}
-            onChange={(e, value) => setData({ ...data, isVIP: value })}
+            // defaultChecked={car ? car.isVIP : defaultData.isVIP}
+            onChange={(e, value) =>car?setData({...car,isVIP:value}): setData({ ...data, isVIP: value })}
             sx={{ mt: 1 }}
           />
         </Box>

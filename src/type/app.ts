@@ -4,11 +4,11 @@ export interface AppType{
     error:Error | null,
 }
 
-export interface BaseOptions{
+export interface BasicOptions{
     onSuccess?:(data:any)=>void;
     isError?:(data:any)=>void;
 }
 
-export interface AppSliceOptions extends BaseOptions{ 
+export interface AppSliceOptions extends BasicOptions{ 
        
 }
