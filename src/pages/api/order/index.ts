@@ -7,13 +7,12 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const method = req.method;
-  if (req.method === "GET") {
-    const {startFrom,arrivedTo} = req.body;
+  if (method === "GET") {
     const expressCar = await prisma.expressCar.findMany({
       where: { isArchived: false },
     });
-   
-    res.status(200).json({expressCar});
+
+    res.status(200).json({ expressCar });
   }
   res.status(404).send("Method is not allowed");
 }
