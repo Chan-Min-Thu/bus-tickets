@@ -26,7 +26,7 @@ const Routes = () => {
   // }
   if (!expressCars) return null;
   return (
-    <Box sx={{ width: "90vw", position: "relative",mx:"auto" }}>
+    <Box sx={{ width: "90vw", position: "relative", mx: "auto" }}>
       <Box
         sx={{
           width: "90vw",
@@ -45,7 +45,6 @@ const Routes = () => {
         </Button>
       </Box>
       <Box>
-
         <Box
           sx={{
             my: 2,
@@ -59,15 +58,21 @@ const Routes = () => {
             ? expressCars.map((item: CreateCarOption) => {
                 return (
                   <Box key={item?.id} sx={{ m: 2 }}>
-                    <Cart item={item}/>
+                    <Cart item={item} />
                   </Box>
                 );
               })
             : null}
         </Box>
       </Box>
-      <Box sx={{ minWidth: "80vw",position: "absolute", zIndex: 4 }}>
-        <Box sx={{mx:"auto"}}>
+      <Box
+        sx={{
+          minWidth: { sm: "100vw", md: "80vw" },
+          position: "absolute",
+          zIndex: 4,
+        }}
+      >
+        <Box sx={{ mx: "auto" }}>
           <NewRoute open={open} setOpen={setOpen} />
         </Box>
       </Box>

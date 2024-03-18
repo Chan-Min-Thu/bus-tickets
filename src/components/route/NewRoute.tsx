@@ -73,7 +73,7 @@ const NewRoute = ({ open, setOpen, car, id }: Props) => {
   return (
     // <Box sx={{ display: "flex", justifyContent: "center" }}>
     <Dialog
-      sx={{ minWidth: 600, mx: "auto" }}
+      sx={{ minWidth: { sm: 300, md: 600 }, mx: "auto" }}
       open={open}
       onClose={() => setOpen(car ? true : false)}
       // TransitionComponent={CSSTransition}sd
@@ -101,7 +101,7 @@ const NewRoute = ({ open, setOpen, car, id }: Props) => {
               ? setData({ ...car, name: e.target.value })
               : setData({ ...data, name: e.target.value })
           }
-          sx={{ width: 300, mt: 1 }}
+          sx={{ width: { md: 300 }, mt: 1 }}
         />
         <Box sx={{ display: "flex", justifyContent: "space-between", mt: 1 }}>
           <TextField
@@ -114,7 +114,7 @@ const NewRoute = ({ open, setOpen, car, id }: Props) => {
                 ? setData({ ...car, startFrom: e.target.value })
                 : setData({ ...data, startFrom: e.target.value })
             }
-            sx={{ width: 130 }}
+            sx={{ width: { xs: 100, md: 130 } }}
           />
           <TextField
             id="standard-basic"
@@ -126,13 +126,13 @@ const NewRoute = ({ open, setOpen, car, id }: Props) => {
                 ? setData({ ...car, arrivedTo: e.target.value })
                 : setData({ ...data, arrivedTo: e.target.value })
             }
-            sx={{ width: 130 }}
+            sx={{ width: { xs: 100, md: 130 } }}
           />
         </Box>
         <Box sx={{ display: "flex", justifyContent: "space-between", mt: 1 }}>
           <TimePicker
             label="Departure"
-            sx={{ width: 130, my: 1, border: "none" }}
+            sx={{ width: { xs: 100, md: 130 }, my: 1, border: "none" }}
             defaultValue={
               car ? dayjs(car.departureTime) : defaultData.departureTime
             }
@@ -144,7 +144,7 @@ const NewRoute = ({ open, setOpen, car, id }: Props) => {
           />
           <TimePicker
             label="Arrived"
-            sx={{ width: 130, my: 1, border: "none" }}
+            sx={{ width: { xs: 100, md: 130 }, my: 1, border: "none" }}
             defaultValue={
               car ? dayjs(car.arrivedTime) : defaultData.arrivedTime
             }
@@ -166,7 +166,7 @@ const NewRoute = ({ open, setOpen, car, id }: Props) => {
                 ? setData({ ...car, price: Number(e.target.value) })
                 : setData({ ...data, price: Number(e.target.value) })
             }
-            sx={{ width: 130 }}
+            sx={{ width: { xs: 100, md: 130 } }}
           />
           <TextField
             id="standard-basic"
@@ -178,7 +178,7 @@ const NewRoute = ({ open, setOpen, car, id }: Props) => {
                 ? setData({ ...car, duration: Number(e.target.value) })
                 : setData({ ...data, duration: Number(e.target.value) })
             }
-            sx={{ width: 130 }}
+            sx={{ width: { xs: 100, md: 130 } }}
           />
         </Box>
         <Box sx={{ display: "flex", justifyContent: "space-between", mt: 1 }}>
@@ -192,7 +192,7 @@ const NewRoute = ({ open, setOpen, car, id }: Props) => {
                 ? setData({ ...car, seats: Number(e.target.value) })
                 : setData({ ...data, seats: Number(e.target.value) })
             }
-            sx={{ width: 130 }}
+            sx={{ width: { xs: 100, md: 130 } }}
           />
           <FormControlLabel
             control={

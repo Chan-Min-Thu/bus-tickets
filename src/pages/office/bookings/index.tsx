@@ -6,13 +6,20 @@ import { BookOnline } from "@mui/icons-material";
 import {
   Box,
   Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
   FormControl,
   FormControlLabel,
   Radio,
   RadioGroup,
+  Typography,
   colors,
 } from "@mui/material";
 import { Booking, ExpressCar, Seats } from "@prisma/client";
+import { defaultSerializeQueryArgs } from "@reduxjs/toolkit/query";
+import { defaultMaxListeners } from "events";
+import { setPriority } from "os";
 import { FormEvent, useEffect, useState } from "react";
 
 const Bookings = () => {
@@ -29,6 +36,9 @@ const Bookings = () => {
   const [selectedSeat, setSelectedSeat] = useState<Seats[]>([]);
   const [collectedCar, setCollectedCar] = useState<ExpressCar[]>([]);
   const [selectedBooking, setSelectedBooking] = useState<Booking[]>([]);
+  const [related, setRelated] = useState<number[]>([]);
+  const [detail, setDetail] = useState<Booking>();
+  const [open, setOpen] = useState<boolean>(false);
   //car names
   const expressCarNames = expressCars.map((item) => item.name);
 
@@ -95,9 +105,32 @@ const Bookings = () => {
     }
   }, [carName, start, arrived, time, date]);
 
+  const handleSubmit = (i: number) => {
+    const findedseat = selectedSeat.find((item) => item.seatNo === i) as Seats;
+    if (findedseat) {
+      const book = bookings.find(
+        (item: Booking) => item.id === findedseat.bookingId
+      ) as Booking;
+      setDetail(book);
+      const seat = seats
+        .filter((item) => item.bookingId === book.id)
+        .map((i) => i.seatNo);
+      setRelated(seat);
+    }
+    setOpen(true);
+  };
+
   return (
-    <Box sx={{ width: "90vw", mx: "auto" }}>
-      <Box sx={{ display: "flex", width: "80vw", mx: "auto" }}>
+    <Box sx={{ width: "70vw", mx: "auto" }}>
+      <Box
+        sx={{
+          display: "flex",
+          minWidth: "50vw",
+          justifyContent: "space-between",
+          flexDirection: { xs: "column", md: "row" },
+          mx: "auto",
+        }}
+      >
         <InputTag
           name="Car Name"
           cars={expressCarNames}
@@ -141,7 +174,14 @@ const Bookings = () => {
           </RadioGroup>
         </FormControl>
       </Box>
-      <Box>
+      <Box
+        sx={{
+          width: "70vw",
+          display: "flex",
+          justifyContent: "flex-start",
+          mx: "auto",
+        }}
+      >
         <MuiDatePicker
           date={null}
           handleDate={(value) => setDate(value)}
@@ -174,19 +214,97 @@ const Bookings = () => {
                         color: "#fcd200",
                         bgcolor: isIncluded ? "#270a54" : "#5d4a72",
                       }}
-                      //   onClick={() => {
-                      //     isSelected
-                      //       ? setSelectedSeats(
-                      //           selectedSeats.filter((i) => i !== item)
-                      //         )
-                      //       : setSelectedSeats([...selectedSeats, item]);
-                      //   }}
+                      onClick={() => handleSubmit(item)}
                     >
                       {item}
                     </Button>
                   </Box>
                 );
               })}
+            <Dialog onClose={() => setOpen(false)} open={open}>
+              <DialogTitle>Passenger Details</DialogTitle>
+              <DialogContent>
+                <Box
+                  sx={{
+                    display: "flex",
+                    mt: 2,
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
+                >
+                  <span
+                    style={{
+                      color: "gray",
+                      marginRight: "5px",
+                      fontFamily: "monospace",
+                    }}
+                  >
+                    Name{" "}
+                  </span>{" "}
+                  : <Typography sx={{ ml: 5 }}>{detail?.name}</Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    mt: 2,
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
+                >
+                  <span
+                    style={{
+                      color: "gray",
+                      marginRight: "5px",
+                      fontFamily: "monospace",
+                    }}
+                  >
+                    Traveller
+                  </span>{" "}
+                  : <Typography sx={{ ml: 5 }}>{detail?.isLocal}</Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    mt: 2,
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
+                >
+                  <span
+                    style={{
+                      color: "gray",
+                      marginRight: "5px",
+                      fontFamily: "monospace",
+                    }}
+                  >
+                    Gender
+                  </span>{" "}
+                  : <Typography sx={{ ml: 5 }}>{detail?.gender}</Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    mt: 2,
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
+                >
+                  <span
+                    style={{
+                      color: "gray",
+                      marginRight: "5px",
+                      fontFamily: "monospace",
+                    }}
+                  >
+                    Seats
+                  </span>{" "}
+                  :{" "}
+                  <Typography sx={{ ml: 5 }}>
+                    {related.map((i) => i).toString()}
+                  </Typography>
+                </Box>
+              </DialogContent>
+            </Dialog>
           </Box>
         </Box>
       </Box>
