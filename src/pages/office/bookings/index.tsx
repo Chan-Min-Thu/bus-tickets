@@ -23,7 +23,7 @@ import { setPriority } from "os";
 import { FormEvent, useEffect, useState } from "react";
 
 const Bookings = () => {
-  const bookings = useAppSelector((state) => state.booking.items);
+  const bookings = useAppSelector((state) => state.booking.items) as Booking[];
   const expressCars = useAppSelector((state) => state.car.items);
 
   const seats = useAppSelector((state) => state.seat.items);

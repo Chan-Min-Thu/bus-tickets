@@ -12,7 +12,7 @@ import {
 import utc from "dayjs/plugin/utc";
 dayjs.extend(utc);
 import { ExpressCar } from "@prisma/client";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import InputTag from "../InputTag";
 import MuiDatePicker from "../DatePicker";
 import AddIcon from "@mui/icons-material/Add";
@@ -25,7 +25,8 @@ import { compareValue } from "@/util/general";
 
 interface Props {
   express: ExpressCar[];
-  setOpen?: ((value: boolean) => void) | undefined;
+  open: boolean;
+  setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 const SearchOrder = ({ express, setOpen }: Props) => {
@@ -67,7 +68,7 @@ const SearchOrder = ({ express, setOpen }: Props) => {
         isLocal: data.traveller,
       },
     });
-    setOpen(false);
+    isOrder ? setOpen(false) : setOpen(true);
   };
   const handleSearch = () => {
     setData({ ...data });
@@ -124,7 +125,7 @@ const SearchOrder = ({ express, setOpen }: Props) => {
 
       <Box sx={{ width: { xs: 230, sm: 300 }, my: 1, color: "success.main" }}>
         <MuiDatePicker
-          date={isOrder ? dayjs(date) : data.date}
+          date={isOrder ? date : data.date}
           handleDate={(newValue) => setData({ ...data, date: newValue })}
           isPast={true}
         />

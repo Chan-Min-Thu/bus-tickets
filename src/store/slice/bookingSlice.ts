@@ -5,7 +5,7 @@ import { setSeats } from "./seatSlice";
 import { setCar } from "./carSlice";
 
 const initialState: BookingType = {
-  items: [],
+  items: [] || {},
   isLoading: false,
   error: null,
 };

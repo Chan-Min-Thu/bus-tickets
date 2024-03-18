@@ -96,20 +96,23 @@ const Trips = () => {
       setSeats(number);
     }
   };
+  const getData = () => {
+    dispatch(getSeats({ carId: car?.id, date: date }));
+    seatfun(car.seats);
+    setSeats(number);
+    setData({
+      ...data,
+      date: new Date(date),
+      isLocal,
+      expressCarId: id,
+      seats: selectedSeats,
+    });
+  };
   useEffect(() => {
     if (date > 0 && isLocal.length > 0 && id > 0) {
-      dispatch(getSeats({ carId: car?.id, date: date }));
-      seatfun(car.seats);
-      setSeats(number);
-      setData({
-        ...data,
-        date: new Date(date),
-        isLocal,
-        expressCarId: id,
-        seats: selectedSeats,
-      });
+      getData();
     }
-  }, [car, selectedSeats, car]);
+  }, [car, selectedSeats]);
   return (
     <Box sx={{ width: { sm: "100vw", md: "95vw" } }}>
       <Box

@@ -17,7 +17,7 @@ import { Booking, ExpressCar, Seats } from "@prisma/client";
 import PassengerInfo from "@/components/card/PassengerInfo";
 
 const Search = () => {
-  const { items: bookings } = useAppSelector((state) => state.booking);
+  const bookings = useAppSelector((state) => state.booking.items) as Booking;
   const seats = useAppSelector((state) => state.seat.items);
   const cars = useAppSelector((state) => state.car.items);
   const dispatch = useAppDispatch();
@@ -25,7 +25,7 @@ const Search = () => {
 
   //useState
   const [bookingId, setBookingId] = useState<string>("");
-  const [booking, setBooking] = useState<Booking[]>();
+  const [booking, setBooking] = useState<Booking>();
   const [seat, setSeat] = useState<Seats>();
   const [car, setCar] = useState<ExpressCar[]>([]);
   useEffect(() => {

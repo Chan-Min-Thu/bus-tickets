@@ -5,7 +5,7 @@ import { Booking, ExpressCar, Seats } from "@prisma/client";
 import { memo } from "react";
 
 interface Props {
-  item: Booking[];
+  item: Booking;
   seats?: Seats[];
   cars?: ExpressCar[];
 }

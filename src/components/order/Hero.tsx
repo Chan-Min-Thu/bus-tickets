@@ -3,12 +3,14 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { ExpressCar } from "@prisma/client";
 import SearchOrder from "./SearchOrder";
 import Footer from "../Footer";
+import { SetStateAction, useState } from "react";
 
 interface Props {
   express: ExpressCar[];
 }
 
 const Hero = ({ express }: Props) => {
+  const [open, setOpen] = useState<boolean>(true);
   if (!express) return null;
   return (
     <Box
@@ -84,7 +86,7 @@ const Hero = ({ express }: Props) => {
             mx: { sm: "auto" },
           }}
         >
-          <SearchOrder express={express} />
+          <SearchOrder express={express} open={true} setOpen={setOpen} />
         </Box>
       </Box>
       <Footer />

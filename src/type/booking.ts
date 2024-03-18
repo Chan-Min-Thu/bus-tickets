@@ -3,7 +3,7 @@ import { BasicOptions } from "./app";
 import { Dayjs } from "dayjs";
 
 export interface BookingType {
-  items: Booking[];
+  items: Booking[] | Booking;
   isLoading: boolean;
   error: Error | null;
 }

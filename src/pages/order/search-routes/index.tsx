@@ -36,7 +36,7 @@ const Search = () => {
     setOpen(false);
   };
   useEffect(() => {
-    if ((expressCars && expressCars.length > 0, isOrder)) {
+    if (expressCars && expressCars.length > 0) {
       setOrder(isOrder);
       const express = expressCars.filter(
         (item) => item.startFrom === startFrom && item.arrivedTo === arrivedTo
@@ -78,7 +78,7 @@ const Search = () => {
   return (
     <Box sx={{ width: "90vw", my: 15, mx: "auto" }}>
       <Dialog onClose={handleClose} open={open}>
-        <SearchOrder express={expressCars} setOpen={setOpen} />
+        <SearchOrder express={expressCars} open={open} setOpen={setOpen} />
       </Dialog>
       <Box sx={{ my: 10 }}>
         <Box

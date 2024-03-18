@@ -9,7 +9,8 @@ interface Props {
 }
 const Cart = memo(({ item }: Props) => {
   const router = useRouter();
-  const date = item.departureTime && new Date(item.departureTime);
+  const t = item.departureTime as Date;
+  const date = item.departureTime && new Date(t);
   const departure =
     date &&
     date.getHours() +

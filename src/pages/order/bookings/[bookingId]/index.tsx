@@ -5,12 +5,13 @@ import { compareValue } from "@/util/general";
 import { CardContent, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
+import { Booking } from "@prisma/client";
 
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 const BookingId = () => {
-  const booking = useAppSelector((state) => state.booking.items);
+  const booking = useAppSelector((state) => state.booking.items) as Booking[];
 
   const cars = useAppSelector((state) => state.car.items);
   const seats = useAppSelector((state) => state.seat.items);
@@ -21,8 +22,9 @@ const BookingId = () => {
     query;
   const id = Number(carId);
   const car = cars.find((item) => item.id === id);
-  const time = new Date(car?.departureTime).getHours();
-  const min = new Date(car?.departureTime).getMinutes();
+  const dep = car?.departureTime as Date;
+  const time = new Date(dep).getHours();
+  const min = new Date(dep).getMinutes();
   const d = new Date(Number(date)).getDate();
   const m = new Date(Number(date)).getMonth();
   const y = new Date(Number(date)).getFullYear();
