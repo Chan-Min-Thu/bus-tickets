@@ -11,7 +11,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 const Header = () => {
-  const navItems = ["Home", "Search", "Contact", "About"];
+  const navItems = ["Home", "Search", "Contact"];
   const router = useRouter();
   const isOrder = router.pathname.includes("order");
   const [open, setOpen] = useState<boolean>(false);
