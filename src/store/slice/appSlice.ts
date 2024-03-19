@@ -17,12 +17,12 @@ export const getData = createAsyncThunk(
     const { onSuccess, isError } = payload;
     try {
       const response = await fetch(`${config.apiBaseUrl}/office/app`);
-      const { expressCar } = await response.json();
+      const { expressCar, bookings, seat } = await response.json();
       console.log(expressCar);
       thunkAPI.dispatch(setInit(true));
       thunkAPI.dispatch(setCar(expressCar));
-      // thunkAPI.dispatch(setBooking(bookings));
-      // thunkAPI.dispatch(setSeats(seat));
+      thunkAPI.dispatch(setBooking(bookings));
+      thunkAPI.dispatch(setSeats(seat));
       onSuccess && onSuccess(expressCar);
     } catch (err) {
       isError && isError(err);
