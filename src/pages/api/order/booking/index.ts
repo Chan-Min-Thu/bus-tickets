@@ -10,7 +10,7 @@ export default async function handler(
     // seats and trip id comfrimed
     const { name, expressCarId, date, isLocal, gender, seats, bookingId } =
       req.body;
-    console.log(req.body);
+    console.log("a", req.body);
     const bookingid: string = bookingId as string;
     const dateSet = new Date(date);
     // console.log(Date.now(dateSet))
