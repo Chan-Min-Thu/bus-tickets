@@ -27,11 +27,11 @@ const OfficeLayout = ({ children }: Props) => {
     }
   }, [session]);
   return (
-    <Box sx={{position:"relative"}}>
-      <Box sx={{position:"fixed",zIndex:5,top:0,minWidth:"100vw"}}>
+    <Box sx={{ position: "relative" }}>
+      <Box sx={{ position: "fixed", zIndex: 5, top: 0, minWidth: "100vw" }}>
         <TopBar />
       </Box>
-      {session ? <Box sx={{mt:10}}>{children}</Box> : <SignIn />}
+      {!session ? <SignIn /> : <Box sx={{ mt: 10 }}>{children}</Box>}
     </Box>
   );
 };
