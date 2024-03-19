@@ -42,12 +42,12 @@ export default async function handler(
     const expressCar = await prisma.expressCar.findMany({
       where: { isArchived: false },
     });
-    const bookings = await prisma.booking.findMany({
-      where: { isArchived: false },
-    });
-    const seat = await prisma.seats.findMany({ where: { isArchived: false } });
-    console.log(expressCar, bookings, seat);
-    return res.status(200).json({ expressCar, bookings, seat });
+    // const bookings = await prisma.booking.findMany({
+    //   where: { isArchived: false },
+    // });
+    // const seat = await prisma.seats.findMany({ where: { isArchived: false } });
+    console.log(expressCar);
+    return res.status(200).json({ expressCar });
   }
-  res.status(404).send("Method is not allowed.");
+  return res.status(404).send("Method is not allowed.");
 }
