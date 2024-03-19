@@ -43,5 +43,5 @@ export default async function handler(
     // console.log(seat);
     return res.status(200).json({ booking, seat });
   }
-  res.status(404).send("Method is not allowed.");
+  return res.status(404).send("Method is not allowed.");
 }
