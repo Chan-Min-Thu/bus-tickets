@@ -12,7 +12,8 @@ interface Props {
 }
 
 const OfficeLayout = ({ children }: Props) => {
-  const { data: session } = useSession();
+  const session = useSession();
+
   const router = useRouter();
   const { init, isLoading } = useAppSelector((state) => state.app);
   const dispatch = useAppDispatch();
@@ -31,7 +32,11 @@ const OfficeLayout = ({ children }: Props) => {
       <Box sx={{ position: "fixed", zIndex: 5, top: 0, minWidth: "100vw" }}>
         <TopBar />
       </Box>
-      {!session ? <SignIn /> : <Box sx={{ mt: 10 }}>{children}</Box>}
+      {session.status === "unauthenticated" ? (
+        <SignIn />
+      ) : (
+        router.push("/office/routes")
+      )}
     </Box>
   );
 };

@@ -23,7 +23,7 @@ const PassengerInfo = memo(({ item, seats, cars }: Props) => {
   if (!car || !item.bookingId || !seats)
     return (
       <Card sx={{ minWidth: "100vw", mx: "auto", bgcolor: "white-gray" }}>
-        <CardContent sx={{ mx: "auto", width: 300, p: 20 }}>
+        <CardContent sx={{ mx: "auto", width: 300, p: { xs: 1, md: 20 } }}>
           <Typography variant="h5">There is no search lists.</Typography>
         </CardContent>
       </Card>
