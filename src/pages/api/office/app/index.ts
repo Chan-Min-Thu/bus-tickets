@@ -46,7 +46,8 @@ export default async function handler(
       where: { isArchived: false },
     });
     const seat = await prisma.seats.findMany({ where: { isArchived: false } });
-    return res.status(200).json({ expressCar, bookings, seat });
+    console.log(expressCar, bookings, seat);
+    return res.status(200).json({ expressCar });
   }
   res.status(404).send("Method is not allowed.");
 }
