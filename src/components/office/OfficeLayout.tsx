@@ -32,11 +32,7 @@ const OfficeLayout = ({ children }: Props) => {
       <Box sx={{ position: "fixed", zIndex: 5, top: 0, minWidth: "100vw" }}>
         <TopBar />
       </Box>
-      {session.status === "unauthenticated" ? (
-        <SignIn />
-      ) : (
-        router.push("/office/routes")
-      )}
+      {session ? <Box sx={{ mt: 10 }}>{children}</Box> : <SignIn />}
     </Box>
   );
 };
