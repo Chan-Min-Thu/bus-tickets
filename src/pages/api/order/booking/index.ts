@@ -34,6 +34,7 @@ export default async function handler(
         confirmed: false,
       },
     });
+    console.log(booking);
     const seat = await prisma.$transaction(
       seats.map((item: number) =>
         prisma.seats.create({ data: { bookingId: booking.id, seatNo: item } })
