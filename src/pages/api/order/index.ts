@@ -12,7 +12,7 @@ export default async function handler(
       where: { isArchived: false },
     });
 
-    res.status(200).json({ expressCar });
+    return res.status(200).json({ expressCar });
   }
-  res.status(404).send("Method is not allowed");
+  return res.status(404).send("Method is not allowed");
 }
