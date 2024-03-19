@@ -18,6 +18,7 @@ export const getData = createAsyncThunk(
     try {
       const response = await fetch(`${config.apiBaseUrl}/office/app`);
       const { expressCar, bookings, seat } = await response.json();
+      console.log(expressCar);
       thunkAPI.dispatch(setInit(true));
       thunkAPI.dispatch(setCar(expressCar));
       thunkAPI.dispatch(setBooking(bookings));
