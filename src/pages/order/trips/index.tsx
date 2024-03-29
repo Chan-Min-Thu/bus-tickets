@@ -112,7 +112,7 @@ const Trips = () => {
     if (date > 0 && isLocal.length > 0 && id > 0) {
       getData();
     }
-  }, [car, selectedSeats]);
+  }, [car, selectedSeats, expressCars]);
   return (
     <Box sx={{ width: { sm: "100vw", md: "95vw" } }}>
       <Box

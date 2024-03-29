@@ -22,7 +22,7 @@ const Routes = () => {
     if (expressCars) {
       dispatch(getData({}));
     }
-  }, []);
+  }, [expressCars]);
   //   if(!session){
   //     return(
   //         <SignIn/>
