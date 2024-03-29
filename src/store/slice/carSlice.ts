@@ -13,6 +13,7 @@ import {
   createSlice,
 } from "@reduxjs/toolkit";
 import { getData } from "./appSlice";
+import { create } from "@mui/material/styles/createTransitions";
 
 const initialState: CarType = {
   items: [],
@@ -105,7 +106,6 @@ export const updateCar = createAsyncThunk(
     }
   }
 );
-
 export const deleteCar = createAsyncThunk(
   "car/deleteCar",
   async (payload: DeleteCarOption, thunkAPI) => {
