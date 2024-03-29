@@ -13,7 +13,7 @@ export const getSeats = createAsyncThunk(
     const { date, carId, onSuccess, isError } = payload;
     try {
       const response = await fetch(
-        `${config.apiBaseUrl}/order/seats/${carId}?date=${date}`
+        `${config.apiBaseUrl}/order/seats/?carId=${carId}?date=${date}`
       );
       const { seats } = await response.json();
       thunkApi.dispatch(setSeats(seats));

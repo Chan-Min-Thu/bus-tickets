@@ -13,8 +13,8 @@ export default async function handler(
     const booking = await prisma.booking.findFirst({
       where: { bookingId },
     });
-    if (!booking)
-      return res.status(400).json({ message: "Invalid BookingId..." });
+    // if (!booking)
+    //   return res.status(400).json({ message: "Invalid BookingId..." });
     // const car = await prisma.expressCar.findFirst({
     //   where: { id: booking?.expressCarId },
     // });

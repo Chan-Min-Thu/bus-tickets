@@ -33,7 +33,6 @@ const Trips = () => {
 
   const expressCars = useAppSelector((state) => state.car.items);
   const bookedSeats = useAppSelector((state) => state.seat.items);
-  console.log("bookedseats", bookedSeats);
   const id = Number(router.query.id);
   const date = Number(router.query.date);
   const seat = Number(router.query.seats);
@@ -57,6 +56,7 @@ const Trips = () => {
   const car = expressCars.find(
     (item: ExpressCar) => item.id === id
   ) as ExpressCar;
+  console.log(car);
   const [seats, setSeats] = useState<number[]>();
   const [selectedSeats, setSelectedSeats] = useState<number[]>([]);
   const [data, setData] = useState<CreateBooking>(defaultBooking);
@@ -109,10 +109,11 @@ const Trips = () => {
     });
   };
   useEffect(() => {
+    console.log(car);
     if (date > 0 && isLocal.length > 0 && id > 0) {
       getData();
     }
-  }, [car]);
+  }, [car, expressCars]);
   return (
     <Box sx={{ width: { sm: "100vw", md: "95vw" } }}>
       <Box
