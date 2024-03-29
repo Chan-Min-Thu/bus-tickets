@@ -12,8 +12,7 @@ interface Props {
 }
 
 const OfficeLayout = ({ children }: Props) => {
-  const session = useSession();
-
+  const { data: session } = useSession();
   const router = useRouter();
   const { init, isLoading } = useAppSelector((state) => state.app);
   const dispatch = useAppDispatch();
@@ -21,12 +20,12 @@ const OfficeLayout = ({ children }: Props) => {
     if (session && !init) {
       dispatch(getData({}));
     }
-  }, [session, init]);
+  }, [init, session]);
   useEffect(() => {
     if (!session) {
       router.push("/office");
     }
-  }, [session]);
+  }, [session, init]);
   return (
     <Box sx={{ position: "relative" }}>
       <Box sx={{ position: "fixed", zIndex: 5, top: 0, minWidth: "100vw" }}>

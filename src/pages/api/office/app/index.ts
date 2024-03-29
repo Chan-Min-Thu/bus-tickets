@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]";
 import { prisma } from "@/util/db";
 import { getTime } from "@/util/general";
+import exp from "constants";
 
 export default async function handler(
   req: NextApiRequest,
@@ -46,6 +47,7 @@ export default async function handler(
       where: { isArchived: false },
     });
     const seat = await prisma.seats.findMany({ where: { isArchived: false } });
+    console.log(expressCar);
     return res.status(200).json({ expressCar, bookings, seat });
   }
   return res.status(404).send("Method is not allowed.");
