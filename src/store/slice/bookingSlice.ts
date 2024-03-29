@@ -3,6 +3,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { BookingType, CreateBooking, GetBooking } from "@/type/booking";
 import { setSeats } from "./seatSlice";
 import { setCar } from "./carSlice";
+import { act } from "react-dom/test-utils";
+import Error from "next/error";
+import { stat } from "fs";
 
 const initialState: BookingType = {
   items: [] || {},
@@ -54,19 +57,21 @@ export const getBooking = createAsyncThunk(
   "booking/getBooking",
   async (payload: GetBooking, thunkApi) => {
     const { bookingId, onSuccess, isError } = payload;
+
     console.log("bookingId", bookingId);
     try {
       const response = await fetch(
         `${config.apiBaseUrl}/order/booking/${bookingId}`
       );
-      const data = await response.json();
-      thunkApi.dispatch(setBooking(data.booking));
-      thunkApi.dispatch(setSeats(data.seats));
+      const { booking, seats } = await response.json();
+      thunkApi.dispatch(setBooking(booking));
+      thunkApi.dispatch(setSeats(seats));
       // thunkApi.dispatch(setCar(car));
       // console.log(booking, seats);
-      onSuccess && onSuccess(data);
+      onSuccess && onSuccess(booking);
     } catch (err) {
       isError && isError(err);
+      throw err;
     }
   }
 );
@@ -77,6 +82,25 @@ const bookingSlice = createSlice({
     setBooking: (state, action) => {
       state.items = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getBooking.fulfilled, (state) => {
+      state.isLoading = false;
+      state.error = null;
+    });
+    builder.addCase(getBooking.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(getBooking.rejected, (state, action) => {
+      if (action.payload) {
+        state.error = action.payload;
+        state.items = [];
+      } else {
+        state.error;
+      }
+      state.isLoading = false;
+    });
   },
 });
 export const { setBooking } = bookingSlice.actions;

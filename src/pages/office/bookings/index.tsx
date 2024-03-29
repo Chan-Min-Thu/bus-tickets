@@ -11,6 +11,7 @@ import {
   DialogTitle,
   FormControl,
   FormControlLabel,
+  Paper,
   Radio,
   RadioGroup,
   Typography,
@@ -188,13 +189,13 @@ const Bookings = () => {
           isPast={false}
         />
       </Box>
-      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+      <Box sx={{ display: "flex", justifyContent: "center", mx: "auto" }}>
         <Box>
           <Box sx={{ display: "flex", width: 400, flexWrap: "wrap" }}>
             {seat &&
-              seat.length > 0 &&
-              selectedSeat &&
-              selectedSeat.length > 0 &&
+            seat.length > 0 &&
+            selectedSeat &&
+            selectedSeat.length > 0 ? (
               seat.map((item: number) => {
                 const isIncluded = selectedSeat.find((i) => i.seatNo === item);
                 return (
@@ -220,7 +221,14 @@ const Bookings = () => {
                     </Button>
                   </Box>
                 );
-              })}
+              })
+            ) : (
+              <Paper sx={{ mt: 10 }}>
+                <Typography variant="h6" sx={{ p: 5 }}>
+                  There is no search lists.
+                </Typography>
+              </Paper>
+            )}
             <Dialog onClose={() => setOpen(false)} open={open}>
               <DialogTitle>Passenger Details</DialogTitle>
               <DialogContent>
@@ -296,7 +304,7 @@ const Bookings = () => {
                       fontFamily: "monospace",
                     }}
                   >
-                    Seats
+                    Related-seats
                   </span>{" "}
                   :{" "}
                   <Typography sx={{ ml: 5 }}>

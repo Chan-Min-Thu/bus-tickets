@@ -37,6 +37,16 @@ const appSlice = createSlice({
       state.init = action.payload;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(getData.fulfilled, (state) => {
+      state.isLoading = false;
+      state.error = null;
+    });
+    builder.addCase(getData.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+  },
 });
 export const { setInit } = appSlice.actions;
 export default appSlice.reducer;

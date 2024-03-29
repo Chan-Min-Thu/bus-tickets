@@ -15,7 +15,7 @@ const Footer = () => {
       <Box
         sx={{
           display: "flex",
-          width: 300,
+          width: 310,
           mx: "auto",
           my: 3,
           justifyContent: "space-between",

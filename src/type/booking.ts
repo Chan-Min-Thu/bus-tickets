@@ -5,7 +5,7 @@ import { Dayjs } from "dayjs";
 export interface BookingType {
   items: Booking[] | Booking;
   isLoading: boolean;
-  error: Error | null;
+  error: any | null;
 }
 export interface GetBooking extends BasicOptions {
   bookingId: string;

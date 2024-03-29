@@ -9,10 +9,12 @@ export default async function handler(
   if (method === "GET") {
     const bookingId = req.query.bookingId as string;
     const isValid = bookingId && bookingId.length > 0;
-    if (!isValid) return res.status(400).send("Bad request....");
+    if (!isValid) return res.status(400).json({ message: "Bad request...." });
     const booking = await prisma.booking.findFirst({
       where: { bookingId },
     });
+    if (!booking)
+      return res.status(400).json({ message: "Invalid BookingId..." });
     // const car = await prisma.expressCar.findFirst({
     //   where: { id: booking?.expressCarId },
     // });
