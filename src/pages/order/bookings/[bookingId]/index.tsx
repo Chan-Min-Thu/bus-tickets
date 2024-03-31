@@ -34,7 +34,7 @@ const BookingId = () => {
     if (booking && bookingId !== undefined) {
       dispatch(getBooking({ bookingId: String(bookingId) }));
     }
-  }, [booking]);
+  }, [bookingId]);
 
   return (
     <Box
