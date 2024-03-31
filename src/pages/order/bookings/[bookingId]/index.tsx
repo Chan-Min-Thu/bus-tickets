@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 const BookingId = () => {
-  const booking = useAppSelector((state) => state.booking.items) as Booking[];
+  const booking = useAppSelector((state) => state.booking.items) as Booking;
 
   const cars = useAppSelector((state) => state.car.items);
   const seats = useAppSelector((state) => state.seat.items);
@@ -31,10 +31,10 @@ const BookingId = () => {
 
   console.log(d);
   useEffect(() => {
-    if (booking && booking.length === 0 && bookingId !== undefined) {
+    if (booking && bookingId !== undefined) {
       dispatch(getBooking({ bookingId: String(bookingId) }));
     }
-  }, [bookingId]);
+  }, [booking]);
 
   return (
     <Box
@@ -157,7 +157,7 @@ const BookingId = () => {
               Seats :
             </Typography>
             <Typography variant="h6">
-              {seats.map((item) => item.seatNo).toString()}
+              {seats.map((item) => item?.seatNo).toString()}
             </Typography>
           </Box>
         </CardContent>

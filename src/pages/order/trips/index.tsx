@@ -12,7 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import Box from "@mui/material/Box";
-import { Booking, ExpressCar, Seats } from "@prisma/client";
+import { ExpressCar } from "@prisma/client";
 import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
 import EventIcon from "@mui/icons-material/Event";
 import PersonIcon from "@mui/icons-material/Person";
@@ -33,6 +33,7 @@ const Trips = () => {
 
   const expressCars = useAppSelector((state) => state.car.items);
   const bookedSeats = useAppSelector((state) => state.seat.items);
+  console.log(bookedSeats);
   const id = Number(router.query.id);
   const date = Number(router.query.date);
   const seat = Number(router.query.seats);
@@ -70,7 +71,6 @@ const Trips = () => {
       isLocal: isLocal,
       seats: selectedSeats,
     };
-    // console.log(booking);
     setData(booking);
     dispatch(createBooking(booking));
     router.push({
@@ -109,11 +109,10 @@ const Trips = () => {
     });
   };
   useEffect(() => {
-    console.log(car);
     if (date > 0 && isLocal.length > 0 && id > 0) {
       getData();
     }
-  }, [car, expressCars]);
+  }, [car, expressCars, selectedSeats]);
   return (
     <Box sx={{ width: { sm: "100vw", md: "95vw" } }}>
       <Box
@@ -187,7 +186,7 @@ const Trips = () => {
                       disabled={
                         (bookedSeats &&
                           bookedSeats.length > 0 &&
-                          bookedSeats.find((i) => i.seatNo === item)) ||
+                          bookedSeats.find((i) => i?.seatNo === item)) ||
                         data.seats.length === seat
                           ? selectedSeats.find((i) => i === item)
                             ? false

@@ -66,8 +66,6 @@ export const getBooking = createAsyncThunk(
       const { booking, seats } = await response.json();
       thunkApi.dispatch(setBooking(booking));
       thunkApi.dispatch(setSeats(seats));
-      // thunkApi.dispatch(setCar(car));
-      // console.log(booking, seats);
       onSuccess && onSuccess(booking);
     } catch (err) {
       isError && isError(err);

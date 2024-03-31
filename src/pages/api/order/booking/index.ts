@@ -10,11 +10,9 @@ export default async function handler(
     // seats and trip id comfrimed
     const { name, expressCarId, date, isLocal, gender, seats, bookingId } =
       req.body;
-    console.log("a", req.body);
     const bookingid: string = bookingId as string;
     const dateSet = new Date(date);
-    // console.log(Date.now(dateSet))
-    // console.log(dateSet);
+
     const isValid =
       name.length > 0 &&
       expressCarId > 0 &&
@@ -34,7 +32,6 @@ export default async function handler(
         confirmed: false,
       },
     });
-    console.log(booking);
     const seat = await prisma.$transaction(
       seats.map((item: number) =>
         prisma.seats.create({ data: { bookingId: booking.id, seatNo: item } })
